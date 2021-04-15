@@ -1,5 +1,6 @@
 import graphene
 import graphql_jwt
+from django.contrib.postgres.search import SearchVector
 from graphene import ObjectType
 from graphql_jwt.decorators import login_required
 
@@ -20,7 +21,7 @@ class Mutation(graphene.ObjectType):
 
 class Query(ObjectType):
     task_by_user = graphene.Field(TaskPaginatorType, page=graphene.Int())
-    task_by_description = graphene.List(TaskType)
+    task_by_description = graphene.List(TaskType, text=graphene.String())
 
     @login_required
     def resolve_task_by_user(self, info, page):
@@ -30,9 +31,9 @@ class Query(ObjectType):
         return get_paginator(tasks, page_size, page, TaskPaginatorType)
 
     @login_required
-    def resolve_task_by_description(self, info, description):
+    def resolve_task_by_description(self, info, text):
         user = info.context.user
-        return Task.objects.filter(user__id=user.id, description__search=description)
+        return Task.objects.annotate(search=SearchVector('description')).filter(search=text, user__id=user.id, is_delete=False)
 
 
 schema = graphene.Schema(mutation=Mutation, query=Query)

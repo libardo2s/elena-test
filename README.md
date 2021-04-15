@@ -84,3 +84,12 @@ mutation UpdateTask($id: Int!, $end_date: Date ){
   }
 }
 ```
+
+Search task by description
+```bash
+query TaskByDescription($text: String!){
+  taskByDescription(text: $text){
+    title, description
+  }
+}
+```
