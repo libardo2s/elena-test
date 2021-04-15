@@ -5,7 +5,8 @@ from graphql_jwt.decorators import login_required
 
 from graphql_app.models import Task
 from graphql_app.mutation import CreateTaskMutation, UpdateTaskMutation, CreateUserMutation
-from graphql_app.types import TaskType
+from graphql_app.types import TaskType, TaskPaginatorType
+from graphql_app.utils import get_paginator
 
 
 class Mutation(graphene.ObjectType):
@@ -18,13 +19,15 @@ class Mutation(graphene.ObjectType):
 
 
 class Query(ObjectType):
-    task_by_user = graphene.List(TaskType)
+    task_by_user = graphene.Field(TaskPaginatorType, page=graphene.Int())
     task_by_description = graphene.List(TaskType)
 
     @login_required
-    def resolve_task_by_user(self, info, **kwarg):
+    def resolve_task_by_user(self, info, page):
+        page_size = 10
         user = info.context.user
-        return Task.objects.filter(user__id=user.id, is_delete=False)
+        tasks = Task.objects.filter(user__id=user.id, is_delete=False)
+        return get_paginator(tasks, page_size, page, TaskPaginatorType)
 
     @login_required
     def resolve_task_by_description(self, info, description):

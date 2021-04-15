@@ -60,3 +60,14 @@ mutation CreateTask($title:String!, $description:String!){
   }
 }
 ```
+
+Task by User
+```bash
+query TaskByUser($page:Int!){
+  taskByUser(page: $page){
+    page
+    pages
+    objects{title}
+  }
+}
+```

@@ -19,3 +19,11 @@ class TaskType(DjangoObjectType):
 
     class Meta:
         model = Task
+
+
+class TaskPaginatorType(graphene.ObjectType):
+    page = graphene.Int()
+    pages = graphene.Int()
+    has_next = graphene.Boolean()
+    has_prev = graphene.Boolean()
+    objects = graphene.List(TaskType)
