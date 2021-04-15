@@ -54,6 +54,7 @@ class UpdateTaskMutation(graphene.Mutation):
         description = graphene.String()
         state = graphene.Int()
         is_delete = graphene.Boolean()
+        end_date = graphene.Date()
 
     task = graphene.Field(TaskType)
 
@@ -70,11 +71,13 @@ class UpdateTaskMutation(graphene.Mutation):
                 description = kwargs.get('description', None)
                 state = kwargs.get('state', None)
                 is_delete = kwargs.get('is_delete', None)
+                end_date = kwargs.get('end_date', None)
 
                 task.title = title if title is not None else task.title
                 task.description = description if description is not None else task.description
                 task.state = state if state is not None else task.state
                 task.is_delete = is_delete if is_delete is not None else task.is_delete
+                task.end_date = end_date if end_date is not None else task.end_date
                 task.save()
 
                 return CreateTaskMutation(task=task)

@@ -71,3 +71,16 @@ query TaskByUser($page:Int!){
   }
 }
 ```
+
+Update Task
+```bash
+Fiels to update: title, end_date, description, state
+is_delete = True to delete a task
+
+mutation UpdateTask($id: Int!, $end_date: Date ){
+  updateTask(id: $id, endDate: $end_date )
+  { 
+    task {title, endDate, startDate} 
+  }
+}
+```
