@@ -4,11 +4,12 @@ from graphene import ObjectType
 from graphql_jwt.decorators import login_required
 
 from graphql_app.models import Task
-from graphql_app.mutation import CreateTaskMutation, UpdateTaskMutation
+from graphql_app.mutation import CreateTaskMutation, UpdateTaskMutation, CreateUserMutation
 from graphql_app.types import TaskType
 
 
 class Mutation(graphene.ObjectType):
+    create_user = CreateUserMutation.Field()
     token_auth = graphql_jwt.ObtainJSONWebToken.Field()
     verify_token = graphql_jwt.Verify.Field()
     refresh_token = graphql_jwt.Refresh.Field()

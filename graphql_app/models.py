@@ -9,4 +9,6 @@ class Task(models.Model):
     title = models.CharField('Titulo', max_length=30, blank=False)
     description = models.CharField('Descripcion', max_length=250, blank=False)
     state = models.CharField('Estado', choices=STATE_TAKS, default=1, max_length=10)
+    start_date = models.DateField('Fecha de inicio de la tarea', auto_now=True)
+    end_date = models.DateField('Fecha de finalizacion de la tarea', null=True, blank=True)
     is_delete = models.BooleanField(default=False)

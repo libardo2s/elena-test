@@ -30,3 +30,33 @@ rebuild:
 ```bash
 docker-compose up -d --build
 ```
+
+QUERIES Y MUTATIONS
+
+Create user
+```bash
+mutation CreateUser($name:String!, $password: String!, $username: String!){
+  createUser(name: $name, password: $password, username: $username){
+    user{ username, firstName }
+  }
+}
+```
+Auth User
+```bash
+mutation TokenAuth($username: String!, $password: String!) {
+  tokenAuth(username: $username, password: $password) {
+    token
+    payload
+    refreshExpiresIn
+  }
+}
+```
+
+Create Task
+```bash
+mutation CreateTask($title:String!, $description:String!){
+  createTask(title: $title, description:$description){
+    task{title, description, startDate}
+  }
+}
+```

@@ -1,17 +1,38 @@
 import graphene
+from django.contrib.auth.models import User
 from graphql import GraphQLError
 from graphql_jwt.decorators import login_required
 
 from graphql_app.models import Task
-from graphql_app.types import TaskType
+from graphql_app.types import TaskType, UserType
+
+
+class CreateUserMutation(graphene.Mutation):
+    user = graphene.Field(UserType)
+
+    class Input(object):
+        username = graphene.String(required=True)
+        password = graphene.String(required=True)
+        name = graphene.String(required=True)
+
+    @staticmethod
+    def mutate(root, info, **kwargs):
+        try:
+            username = kwargs.get('username', None)
+            password = kwargs.get('password', None)
+            name = kwargs.get('name', None)
+            user = User.objects.create_user(first_name=name, username=username, password=password)
+            return CreateUserMutation(user=user)
+        except Exception as e:
+            raise GraphQLError(e.message)
 
 
 class CreateTaskMutation(graphene.Mutation):
+    task = graphene.Field(TaskType)
+
     class Input(object):
         title = graphene.String(required=True)
         description = graphene.String(required=True)
-
-    task = graphene.Field(TaskType)
 
     @staticmethod
     @login_required
