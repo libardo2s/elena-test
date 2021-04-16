@@ -10,7 +10,7 @@ from graphql_app.types import TaskType, UserType
 class CreateUserMutation(graphene.Mutation):
     user = graphene.Field(UserType)
 
-    class Input(object):
+    class Arguments(object):
         username = graphene.String(required=True)
         password = graphene.String(required=True)
         name = graphene.String(required=True)
@@ -24,13 +24,13 @@ class CreateUserMutation(graphene.Mutation):
             user = User.objects.create_user(first_name=name, username=username, password=password)
             return CreateUserMutation(user=user)
         except Exception as e:
-            raise GraphQLError(e.message)
+            raise GraphQLError("El usuario ya se encuentra registrado")
 
 
 class CreateTaskMutation(graphene.Mutation):
     task = graphene.Field(TaskType)
 
-    class Input(object):
+    class Arguments(object):
         title = graphene.String(required=True)
         description = graphene.String(required=True)
 
@@ -48,7 +48,7 @@ class CreateTaskMutation(graphene.Mutation):
 
 
 class UpdateTaskMutation(graphene.Mutation):
-    class Input(object):
+    class Arguments(object):
         id = graphene.Int(required=True)
         title = graphene.String()
         description = graphene.String()

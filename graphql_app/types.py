@@ -9,6 +9,7 @@ from graphql_app.models import Task
 class UserType(DjangoObjectType):
     class Meta:
         model = User
+        fields = ('username', 'first_name', 'email')
 
 
 class TaskType(DjangoObjectType):
@@ -19,6 +20,7 @@ class TaskType(DjangoObjectType):
 
     class Meta:
         model = Task
+        fields = '__all__'
 
 
 class TaskPaginatorType(graphene.ObjectType):

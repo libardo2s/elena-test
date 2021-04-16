@@ -33,7 +33,8 @@ class Query(ObjectType):
     @login_required
     def resolve_task_by_description(self, info, text):
         user = info.context.user
-        return Task.objects.annotate(search=SearchVector('description')).filter(search=text, user__id=user.id, is_delete=False)
+        return Task.objects.annotate(search=SearchVector('description')).filter(search=text, user__id=user.id,
+                                                                                is_delete=False)
 
 
 schema = graphene.Schema(mutation=Mutation, query=Query)

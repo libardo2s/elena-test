@@ -16,3 +16,5 @@ six==1.15.0
 sqlparse==0.4.1
 text-unidecode==1.3
 typing-extensions==3.7.4.3
+pytest-django
+mixer

@@ -31,7 +31,8 @@ rebuild:
 docker-compose up -d --build
 ```
 
-QUERIES Y MUTATIONS
+## QUERIES AND MUTATIONS
+
 
 Create user
 ```bash
@@ -92,4 +93,9 @@ query TaskByDescription($text: String!){
     title, description
   }
 }
+```
+
+## Run unit test
+```bash
+docker-compose run web pytest
 ```
