@@ -1,0 +1,7 @@
+type Task {
+    user: User
+    title: String!
+    description: String!
+    start_date: String!
+    end_date: String!
+}

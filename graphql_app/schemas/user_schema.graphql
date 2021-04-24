@@ -1,0 +1,5 @@
+type User {
+    username: User!
+    first_name: String!
+    last_name: String
+}
