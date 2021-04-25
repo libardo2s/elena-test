@@ -1,3 +1,7 @@
 type Query {
     tasks: [Task!]!
 }
+
+type Mutation {
+    createUser(first_name: String!, last_name: String!, username: String!, password: String!): ResponseUser!
+}

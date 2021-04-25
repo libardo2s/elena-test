@@ -3,3 +3,9 @@ type User {
     first_name: String!
     last_name: String
 }
+
+type ResponseUser{
+    user: User!
+    error_message: String!
+    is_error: Boolean!
+}

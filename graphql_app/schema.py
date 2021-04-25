@@ -1,6 +1,6 @@
 from ariadne import QueryType, make_executable_schema, load_schema_from_path, MutationType
 
-from graphql_app.resolvers import task_resolver
+from graphql_app.resolvers import task_resolver, user_resolver
 
 type_defs = [
     load_schema_from_path("graphql_app/schema.graphql"),
@@ -9,7 +9,10 @@ type_defs = [
 ]
 
 query = QueryType()
+mutation = MutationType()
+
 query.set_field("tasks", task_resolver.list_tasks)
 
+mutation.set_field("createUser", user_resolver.create_user)
 
-schema = make_executable_schema(type_defs, query)
+schema = make_executable_schema(type_defs, query, mutation)
